@@ -1,0 +1,43 @@
+<div class="container">
+
+  <!-- DONE Complete this markup for showing error upon unsuccessful login. -->
+  <div *ngIf="!username.valid && !username.errors.required || !password.valid && !password.errors.required">
+    <p class="error">Login credentials were incorrect!</p>
+  </div>
+
+  <!-- Complete this markup for showing the status bar correctly, depending on whether or not the user is authenticated. -->
+  <div class="status">
+    <span *ngIf="loggedIn === true">User ID: {{username}}</span>
+    <form (ngSubmit)="login(f); f.reset()" #f="ngForm">
+      <input placeholder="username" id="username" name="username" class="form-control" ngModel #username="ngModel" required/>
+
+      <div *ngIf="username.touched && !username.valid">
+        <div *ngIf="username.errors.required" class="alert alert-danger">
+          Username is required
+        </div>
+      </div>
+
+      <input placeholder="password" id="password" name="password" class="form-control" type="password" ngModel #password="ngModel"
+        required minlength="8" />
+      <div *ngIf="password.touched && !password.valid">
+        <div *ngIf="password.errors.required" class="alert alert-danger">
+          Password is required
+        </div>
+        <div *ngIf="password.errors.minlength" class="alert alert-danger">
+          Password must be at least {{ password.errors.minlength.requiredLength }} characters
+        </div>
+      </div>
+
+      <button [disabled]="!f.valid" type="submit">Log In</button>
+
+    </form>
+    <div>
+      <button type="submit" (click)="testApi($event)">Test API</button>
+      <button (click)="logout()">Logout</button>
+      <p>{{friends}}</p>
+    </div>
+  </div>
+
+
+  <!-- Add markup for showing the login form if the user is not authenticated. -->
+</div>
